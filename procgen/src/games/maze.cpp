@@ -119,7 +119,7 @@ class MazeGame : public BasicAbstractGame {
             step_data.level_complete = true;
         }
 
-        step_data.done = step_data.reward > 0;
+        // step_data.done = step_data.reward > 0;
     }
 
     void serialize(WriteBuffer *b) override {
