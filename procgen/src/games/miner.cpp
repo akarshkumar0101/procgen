@@ -21,6 +21,7 @@ const int OOB_WALL = 10;
 class MinerGame : public BasicAbstractGame {
   public:
     int diamonds_remaining = 0;
+    bool akdone = false;
 
     MinerGame()
         : BasicAbstractGame(NAME) {
@@ -75,9 +76,13 @@ class MinerGame : public BasicAbstractGame {
             step_data.done = true;
         } else if (obj->type == EXIT) {
             if (diamonds_remaining == 0) {
-                step_data.reward += COMPLETION_BONUS;
+                // step_data.reward += COMPLETION_BONUS;
                 step_data.level_complete = true;
-                step_data.done = true;
+                // step_data.done = true;
+                if (!akdone) {
+                    step_data.reward += COMPLETION_BONUS;
+                }
+                this->akdone = true;
             }
         }
     }
@@ -130,6 +135,8 @@ class MinerGame : public BasicAbstractGame {
     }
 
     void game_reset() override {
+        this->timeout = 500;
+        this->akdone = false;
         BasicAbstractGame::game_reset();
 
         agent->rx = .5;
